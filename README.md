@@ -19,4 +19,4 @@ $ yarn generate
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
-Back end can be found at [https://github.com/jacdavwill/vehicle-maintenance-tracker]
+Back end can be found at https://github.com/jacdavwill/vehicle-maintenance-tracker
