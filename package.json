@@ -14,8 +14,10 @@
     "@nuxtjs/axios": "^5.12.2",
     "axios": "^0.20.0",
     "nuxt": "^2.14.0",
+    "nuxt-property-decorator": "^2.8.8",
     "query-string": "^6.13.4",
-    "vuetify-dialog": "^2.0.11"
+    "vuetify-dialog": "^2.0.11",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
