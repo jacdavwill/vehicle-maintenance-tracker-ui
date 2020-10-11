@@ -1,6 +1,16 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  watchers: {
+    chokidar: {
+      usePolling: true,
+      useFsEvents: false
+    },
+    webpack: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
+  },
   /*
   ** Nuxt rendering mode
   ** See https://nuxtjs.org/api/configuration-mode
@@ -11,6 +21,10 @@ export default {
   ** See https://nuxtjs.org/api/configuration-target
   */
   target: 'static',
+
+  // router: {
+  //   base: (process.env.NUXT_PATH || '').replace(/\/?$/, '/') // ensure trailing slash
+  // },
   /*
   ** Headers of the page
   ** See https://nuxtjs.org/api/configuration-head
@@ -49,14 +63,12 @@ export default {
   */
   buildModules: [
     '@nuxt/typescript-build',
-    '@nuxtjs/vuetify',
+    '@nuxtjs/vuetify'
   ],
   /*
   ** Nuxt.js modules
   */
-  modules: [
-    '@nuxtjs/axios'
-  ],
+  modules: [],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -90,5 +102,14 @@ export default {
   ** See https://nuxtjs.org/api/configuration-build/
   */
   build: {
+    extend(config, { isDev, isClient }) {
+      if (isDev) {
+        config.devtool = isClient ? 'source-map' : 'inline-source-map'
+      }
+    },
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000
+    }
   }
 }
