@@ -88,41 +88,10 @@
 import Logo from '~/components/Logo.vue'
 import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
-export default class Dashboard {
+export default {
   components: {
     Logo,
     VuetifyLogo
-  }
-
-  get vehicles() {
-    const a = {
-      year: 2020,
-      nickname: "nickname",
-      model: "Model",
-      mileage: 150000,
-      make: "Make",
-      color: "Color",
-      transmission: "Transmission",
-      image: "image url",
-      lastOilChangeDate: "oil change",
-      lastTireRotationDate: "tire rotation",
-      lastRegistrationDate: "registration"
-    }
-    const b = {
-      year: 2020,
-      nickname: "nickname",
-      model: "Model",
-      mileage: 150000,
-      make: "Make",
-      color: "Color",
-      transmission: "Transmission",
-      image: "image url",
-      lastOilChangeDate: "oil change",
-      lastTireRotationDate: "tire rotation",
-      lastRegistrationDate: "registration"
-    }
-
-    return [a, b]
   }
 }
 </script>
