@@ -107,9 +107,9 @@ export default {
         config.devtool = isClient ? 'source-map' : 'inline-source-map'
       }
     },
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
-    }
+    // watchOptions: {
+    //   aggregateTimeout: 300,
+    //   poll: 1000
+    // }
   }
 }
