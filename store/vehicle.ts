@@ -10,6 +10,9 @@ export const mutations: MutationTree<VehicleState> = {
   setVehicles(state, vehicles: Vehicle[]) {
     state.vehicles = vehicles
   },
+  getVehicles(state) {
+    return state.vehicles
+  },
   editVehicle(state, newVehicle: Vehicle) {
     state.vehicles = state.vehicles.filter(
       vehicle => vehicle.vehicleId !== newVehicle.vehicleId
@@ -22,11 +25,11 @@ export const mutations: MutationTree<VehicleState> = {
 }
 
 export const actions: ActionTree<VehicleState, RootState> = {
-  async load({ commit }) {
+  async load({ state, commit }) {
     // await this.$axios.$post('vehicles').then(response => {
     //   commit('setVehicles', response)
     // })
-
+    console.log('vehicles loaded')
     const a = {
       year: 2020,
       nickname: 'nickname',
@@ -53,9 +56,10 @@ export const actions: ActionTree<VehicleState, RootState> = {
       lastTireRotationDate: 'tire rotation2',
       lastRegistrationDate: 'registration2'
     }
-
-    commit('addVehicle', a)
-    commit('addVehicle', b)
+    if (state.vehicles.length == 0) {
+      commit('addVehicle', a)
+      commit('addVehicle', b)
+    }
   },
   editVehicle({ commit }, vehicle: Vehicle) {
     this.$axios.$put(`vehicle/${vehicle.vehicleId}`, vehicle).then(vehicle => {

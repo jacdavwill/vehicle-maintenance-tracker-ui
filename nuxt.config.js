@@ -4,10 +4,12 @@ export default {
   watchers: {
     chokidar: {
       usePolling: true,
-      useFsEvents: false
+      useFsEvents: false,
+      depth: 3,
+      persistent: true,
+      alwaysStat: true
     },
     webpack: {
-      aggregateTimeout: 300,
       poll: 1000
     }
   },
@@ -51,7 +53,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/axios'],
+  plugins: [],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -71,6 +73,9 @@ export default {
    */
   axios: {
     baseURL: process.env.API_BASE || 'http://localhost:8080/'
+  },
+  env: {
+    devMode: !!process.env.DEV_MODE
   },
   /*
    ** vuetify module configuration
@@ -102,10 +107,6 @@ export default {
       if (isDev) {
         config.devtool = isClient ? 'source-map' : 'inline-source-map'
       }
-    },
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: 1000
     }
   }
 }

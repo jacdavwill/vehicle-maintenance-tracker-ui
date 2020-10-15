@@ -6,7 +6,7 @@
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
         </template>
         <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
-        <v-card-title>{{ vehicle.nickname }}</v-card-title>
+        <v-card-title>My Vehicle</v-card-title>
         <v-card-subtitle>Honda Civic, 2016</v-card-subtitle>
         <v-divider class="mx-4"></v-divider>
         <v-card-title>Next Maintenance</v-card-title>
@@ -30,33 +30,34 @@
           elevation="2"
           text
           @click="reserve"
-        >Details</v-btn>
+        >Details
+        </v-btn>
       </v-card>
     </v-row>
   </div>
 </template>
 
 <script>
-import { namespace, State, Vue } from 'nuxt-property-decorator'
-import { VehicleState } from '@/types/state'
+export default {
+  data() {
+    return {
+      reactive: true,
+      loading: false,
+      selection: 1
+    }
+  },
+  mounted() {
+    this.$store.dispatch('vehicle/load')
+  },
+  methods: {
+    reserve() {
+      this.loading = true
+      setTimeout(() => (this.loading = false), 2000)
+    },
 
-const vehicleStore = namespace('vehicle')
-
-export default class DashboardPage extends Vue {
-  @State vehicleState: VehicleState
-
-  data: {
-    loading: false,
-    selection: 1,
-  }
-
-  reserve() {
-    this.loading = true
-    setTimeout(() => (this.loading = false), 2000)
-  }
-
-  get vehicles() {
-    return this.vehicleState.vehicles
+    vehicles() {
+      return this.$store.commit('vehicle/getVehicles')
+    }
   }
 }
 </script>
