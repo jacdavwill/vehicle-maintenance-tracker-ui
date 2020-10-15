@@ -38,7 +38,7 @@
 
 <script>
 import { namespace, State, Vue } from 'nuxt-property-decorator'
-import { VehicleState } from '../types/state'
+import { VehicleState } from '@/types/state'
 
 const vehicleStore = namespace('vehicle')
 
