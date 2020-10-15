@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-for="(vehicle, index) in vehicles()" :key="index">
+    <v-row v-for="(vehicle, index) in vehicles" :key="index">
       <v-card :loading="loading" class="mx-auto my-12" max-width="374">
         <template slot="progress">
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
@@ -37,49 +37,26 @@
 </template>
 
 <script>
-export default {
-  data: () => ({
+import { namespace, State, Vue } from 'nuxt-property-decorator'
+import { VehicleState } from '../types/state'
+
+const vehicleStore = namespace('vehicle')
+
+export default class DashboardPage extends Vue {
+  @State vehicleState: VehicleState
+
+  data: {
     loading: false,
     selection: 1,
-  }),
+  }
 
-  methods: {
-    reserve() {
-      this.loading = true
+  reserve() {
+    this.loading = true
+    setTimeout(() => (this.loading = false), 2000)
+  }
 
-      setTimeout(() => (this.loading = false), 2000)
-    },
-
-    vehicles() {
-      const a = {
-        year: 2020,
-        nickname: "nickname",
-        model: "Model",
-        mileage: 150000,
-        make: "Make",
-        color: "Color",
-        transmission: "Transmission",
-        image: "image url",
-        lastOilChangeDate: "oil change",
-        lastTireRotationDate: "tire rotation",
-        lastRegistrationDate: "registration"
-      }
-      const b = {
-        year: 2020,
-        nickname: "nickname2",
-        model: "Model2",
-        mileage: 150000,
-        make: "Make2",
-        color: "Color2",
-        transmission: "Transmission2",
-        image: "image url2",
-        lastOilChangeDate: "oil change2",
-        lastTireRotationDate: "tire rotation2",
-        lastRegistrationDate: "registration2"
-      }
-
-      return [a, b]
-    }
-  },
+  get vehicles() {
+    return this.vehicleState.vehicles
+  }
 }
 </script>
