@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-for="(vehicle, index) in vehicles" :key="index">
+    <v-row v-if="loading" v-for="vehicle in allVehicles" :key="vehicle.vehicleId">
       <v-card :loading="loading" class="mx-auto my-12" max-width="374">
         <template slot="progress">
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
@@ -37,17 +37,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 export default {
   data() {
     return {
       reactive: true,
-      loading: false,
-      selection: 1
+      loading: true,
+      selection: 1,
+      allVehicles: []
     }
   },
   mounted() {
-    this.$store.dispatch('vehicle/load')
+    this.loading = true
+    this.allVehicles = this.$store.dispatch('vehicle/getVehicles')
+    this.loading = false
   },
   methods: {
     reserve() {
