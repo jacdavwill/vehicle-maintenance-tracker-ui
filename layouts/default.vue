@@ -49,28 +49,33 @@
 
 <script>
 export default {
-  data () {
-    return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Login',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Vehicles',
-          to: '/vehicles'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vehicle Maintenance Tracker'
-    }
-  }
-}
+   data() {
+      return {
+         clipped: false,
+         drawer: false,
+         fixed: false,
+         items: [
+            {
+               icon: "mdi-apps",
+               title: "Welcome",
+               to: "/"
+            },
+            {
+               icon: "mdi-chart-bubble",
+               title: "Vehicles",
+               to: "/vehicles"
+            },
+            {
+               icon: "mdi-plus-circle",
+               title: "Add Vehicle",
+               to: "/add-vehicle"
+            }
+         ],
+         miniVariant: false,
+         right: true,
+         rightDrawer: false,
+         title: "Vehicle Maintenance Tracker"
+      };
+   }
+};
 </script>
