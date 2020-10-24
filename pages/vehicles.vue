@@ -1,5 +1,11 @@
 <template>
   <div>
+    <p v-if="isLoggedIn">
+      Logged in
+    </p>
+    <p v-else>
+      Not Logged in
+    </p>
     <v-row v-for="(vehicle, index) in vehicles()" :key="index">
       <v-card :loading="loading" class="mx-auto my-12" max-width="374">
         <template slot="progress">
@@ -33,6 +39,12 @@
         >Details</v-btn>
       </v-card>
     </v-row>
+
+    <div>
+      <v-btn>
+        Add a new vehicle here
+      </v-btn>
+    </div>
   </div>
 </template>
 
@@ -42,7 +54,11 @@ export default {
     loading: false,
     selection: 1,
   }),
-
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
+    }
+  },
   methods: {
     reserve() {
       this.loading = true
@@ -79,7 +95,7 @@ export default {
       }
 
       return [a, b]
-    }
+    },
   },
 }
 </script>
