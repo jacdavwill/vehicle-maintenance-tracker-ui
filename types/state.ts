@@ -1,4 +1,4 @@
-import { Vehicle } from '~/types/vehicle'
+import { Vehicle } from './vehicle'
 
 export interface RootState {
   userAuthToken?: string | undefined

@@ -1,5 +1,5 @@
 import { ActionTree, MutationTree } from 'vuex'
-import { RootState } from '~/types/state'
+import { RootState } from '../../deleteMeTemp-master/deleteMeTemp-master/types/state'
 import axios from 'axios'
 
 export const state = (): RootState => ({

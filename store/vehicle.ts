@@ -1,13 +1,26 @@
 import {ActionTree, MutationTree} from 'vuex'
-import {RootState, VehicleState} from '~/types/state'
-import {Vehicle} from '~/types/vehicle'
+import {RootState, VehicleState} from '../../deleteMeTemp-master/deleteMeTemp-master/types/state'
+import {Vehicle} from '../../deleteMeTemp-master/deleteMeTemp-master/types/vehicle'
 
-export const state = (): VehicleState => ({
+export const vehicleState = (): VehicleState => ({
   loading: false,
-  vehicles: []
+  vehicles: [{
+    userId: 'userId',
+    vehicleId: 'vehicle1',
+    year: 2020,
+    nickname: 'nickname',
+    model: 'Model',
+    mileage: 150000,
+    make: 'Make',
+    color: 'Color',
+    transmissionType: 'Transmission',
+    imageUrl: 'image url',
+    energyType: 'gasoline',
+    registrationMonth: 'Jan'
+  }]
 })
 
-export const mutations: MutationTree<VehicleState> = {
+export const vehicleMutations: MutationTree<VehicleState> = {
   setLoading(state, loading: boolean) {
     state.loading = loading
   },
@@ -27,7 +40,7 @@ export const mutations: MutationTree<VehicleState> = {
   }
 }
 
-export const actions: ActionTree<VehicleState, RootState> = {
+export const vehicleActions: ActionTree<VehicleState, RootState> = {
   async getVehicles({state, commit}) {
     // await this.$axios.$post('vehicles').then(response => {
     //   commit('setVehicles', response)

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row v-if="loading" v-for="vehicle in allVehicles" :key="vehicle.vehicleId">
+    <v-row v-for="vehicle in allVehicles" :key="vehicle.vehicleId">
       <v-card :loading="loading" class="mx-auto my-12" max-width="374">
         <template slot="progress">
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
@@ -38,28 +38,32 @@
 </template>
 
 <script lang="ts">
+import {  } from "~/store/vehicle";
+import { Vue } from 'nuxt-property-decorator'
+
+const store = Vue.use(Vuex)
+
 export default {
-  data() {
+  data: function() {
     return {
       reactive: true,
-      loading: true,
+      loading: false,
       selection: 1,
-      allVehicles: []
+      allVehicles: vehicleState().vehicles
     }
   },
   mounted() {
-    this.loading = true
-    this.allVehicles = this.$store.dispatch('vehicle/getVehicles')
-    this.loading = false
+    // this.loading = true
+    // this.allVehicles = this.$store.dispatch('vehicle/getVehicles')
+    // this.loading = false
   },
   methods: {
     reserve() {
-      this.loading = true
-      setTimeout(() => (this.loading = false), 2000)
+
     },
 
     vehicles() {
-      return this.$store.commit('vehicle/getVehicles')
+      // this.$store.commit('vehicle/getVehicles')
     }
   }
 }
