@@ -1,13 +1,13 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from "vuetify/es5/util/colors";
 
 export default {
   watchers: {
     chokidar: {
       usePolling: true,
-      useFsEvents: false,
       depth: 3,
       persistent: true,
-      alwaysStat: true
+      alwaysStat: true,
+      useFsEvents: true
     },
     webpack: {
       poll: 1000
@@ -32,8 +32,8 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: "%s - " + process.env.npm_package_name,
+    title: process.env.npm_package_name || "",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -72,17 +72,17 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env.API_BASE || 'http://localhost:8080/'
-  },
-  env: {
-    devMode: !!process.env.DEV_MODE
+    baseURL: (process.env.API_BASE || "https://PUT/BASE/PATH/HERE").replace(
+      /\/?$/,
+      "/"
+    ) // ensure trailing slash
   },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+    customVariables: ["~/assets/variables.scss"],
     theme: {
       dark: true,
       themes: {
@@ -105,8 +105,8 @@ export default {
   build: {
     extend(config, { isDev, isClient }) {
       if (isDev) {
-        config.devtool = isClient ? 'source-map' : 'inline-source-map'
+        config.devtool = isClient ? "source-map" : "inline-source-map";
       }
     }
   }
-}
+};

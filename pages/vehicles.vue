@@ -1,6 +1,12 @@
 <template>
   <div>
-    <v-row v-for="vehicle in allVehicles" :key="vehicle.vehicleId">
+    <p v-if="isLoggedIn">
+      Logged in
+    </p>
+    <p v-else>
+      Not Logged in
+    </p>
+    <v-row v-for="(vehicle, index) in vehicles()" :key="index">
       <v-card :loading="loading" class="mx-auto my-12" max-width="374">
         <template slot="progress">
           <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
@@ -34,28 +40,25 @@
         </v-btn>
       </v-card>
     </v-row>
+
+    <div>
+      <v-btn>
+        Add a new vehicle here
+      </v-btn>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import {  } from "~/store/vehicle";
-import { Vue } from 'nuxt-property-decorator'
-
-const store = Vue.use(Vuex)
-
+<script>
 export default {
-  data: function() {
-    return {
-      reactive: true,
-      loading: false,
-      selection: 1,
-      allVehicles: vehicleState().vehicles
+  data: () => ({
+    loading: false,
+    selection: 1,
+  }),
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.isLoggedIn;
     }
-  },
-  mounted() {
-    // this.loading = true
-    // this.allVehicles = this.$store.dispatch('vehicle/getVehicles')
-    // this.loading = false
   },
   methods: {
     reserve() {
@@ -63,8 +66,35 @@ export default {
     },
 
     vehicles() {
-      // this.$store.commit('vehicle/getVehicles')
-    }
-  }
+      const a = {
+        year: 2020,
+        nickname: "nickname",
+        model: "Model",
+        mileage: 150000,
+        make: "Make",
+        color: "Color",
+        transmission: "Transmission",
+        image: "image url",
+        lastOilChangeDate: "oil change",
+        lastTireRotationDate: "tire rotation",
+        lastRegistrationDate: "registration"
+      }
+      const b = {
+        year: 2020,
+        nickname: "nickname2",
+        model: "Model2",
+        mileage: 150000,
+        make: "Make2",
+        color: "Color2",
+        transmission: "Transmission2",
+        image: "image url2",
+        lastOilChangeDate: "oil change2",
+        lastTireRotationDate: "tire rotation2",
+        lastRegistrationDate: "registration2"
+      }
+
+      return [a, b]
+    },
+  },
 }
 </script>
