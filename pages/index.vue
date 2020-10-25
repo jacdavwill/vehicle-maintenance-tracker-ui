@@ -73,9 +73,10 @@ export default {
         console.log("'" + this.email + "'   '" + this.password + "'");
         //const response = await axios.get(url + '/login'); // API CALL. Missing stuff
         //this.authentication = response.authentication;
-	this.$store.commit('loggedIn', this.email, 'myauthenticationtoken');
+	      this.$store.commit('loggedIn', this.email, 'myauthenticationtoken')
+        this.$store.state.userAuthToken = 'token' // add this to the above method call
         this.loading = false;
-	this.$router.push('/vehicles');
+	      this.$router.push('/vehicles');
       } catch (error) {
         console.log(error);
         this.loading = false;

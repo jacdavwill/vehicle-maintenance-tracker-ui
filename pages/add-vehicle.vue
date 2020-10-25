@@ -136,11 +136,14 @@ import carTypes from "../static/vehicleTypes.json";
 import { Vehicle } from "../types/vehicle.ts";
 export default {
   mounted() {
+    if (!this.$store.state.userAuthToken) {
+      this.$router.push('/')
+    }
     this.$refs.transmission.$refs.input.addEventListener(
       "focus",
       this.onTransmissionFocus,
       true
-    );
+    )
   },
   data: () => ({
     loading: false,

@@ -101,6 +101,11 @@ export default {
   },
   async mounted() {
     this.vehicles = await this.getVehicles()
+  },
+  beforeMount() {
+    if (!this.$store.state.userAuthToken) {
+      this.$router.push('/')
+    }
   }
 }
 </script>
