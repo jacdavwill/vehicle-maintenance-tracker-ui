@@ -59,7 +59,7 @@ export default {
                to: "/"
             },
             {
-               icon: "mdi-chart-bubble",
+               icon: "mdi-car",
                title: "Vehicles",
                to: "/vehicles"
             },
