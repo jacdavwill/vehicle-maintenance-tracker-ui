@@ -61,34 +61,31 @@ export default {
   }),
   computed: {
     isLoggedIn() {
-      return this.$store.state.isLoggedIn;
+      return this.$store.state.userAuthToken
     }
   },
   methods: {
     async loginUser() {
       try {
-        this.clearError();
-        this.loading = true;
-        console.log("Logging in with email and password");
-        console.log("'" + this.email + "'   '" + this.password + "'");
-        //const response = await axios.get(url + '/login'); // API CALL. Missing stuff
-        //this.authentication = response.authentication;
-	      this.$store.commit('loggedIn', this.email, 'myauthenticationtoken')
-        this.$store.state.userAuthToken = 'token' // add this to the above method call
-        this.loading = false;
-	      this.$router.push('/vehicles');
+        this.clearError()
+        this.loading = true
+        console.log("Logging in with email and password")
+        console.log("'" + this.email + "'   '" + this.password + "'")
+	      this.$store.dispatch('authenticate', { email: this.email, password: 'myauthenticationtoken' })
+        this.loading = false
+	      this.$router.push('/vehicles')
       } catch (error) {
-        console.log(error);
-        this.loading = false;
+        console.log(error)
+        this.loading = false
       }
     },
     showError(errorMessage) {
-      this.displayError = true;
-      this.errorMessage = "Error: " + errorMessage;
+      this.displayError = true
+      this.errorMessage = "Error: " + errorMessage
     },
     clearError() {
-      this.displayError = false;
-      this.errorMessage = '';
+      this.displayError = false
+      this.errorMessage = ''
     }
   }
 }

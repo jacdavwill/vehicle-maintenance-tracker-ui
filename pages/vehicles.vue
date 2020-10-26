@@ -53,7 +53,7 @@ export default {
     this.vehicles = await this.getVehicles()
   },
   beforeMount() {
-    if (!this.$store.commit('getUserAuthToken')) {
+    if (!this.$store.state.userAuthToken) {
       this.$router.push('/')
     }
   }

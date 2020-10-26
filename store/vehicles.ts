@@ -75,7 +75,6 @@ export const actions: ActionTree<VehicleState, RootState> = {
       commit('updateVehicles', a)
       commit('updateVehicles', b)
     }
-    commit('setLoading', false)
     return [a, b]
   },
   editVehicle({commit}, vehicle: Vehicle) {

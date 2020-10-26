@@ -5,7 +5,7 @@
 <script>
 export default {
   mounted() {
-    this.$store.state.userAuthToken = undefined
+    this.$store.dispatch('logout')
     this.$router.push('/')
   }
 }
