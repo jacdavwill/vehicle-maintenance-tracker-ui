@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "lint": "eslint --ext .ts,.js,.vue --ignore-path .gitignore .",
+    "precommit": "npm run lint",
     "dev": "nuxt-ts",
     "build": "nuxt-ts build",
     "start": "nuxt-ts start",
@@ -14,6 +16,7 @@
     "@nuxt/typescript-runtime": "^1.0.0",
     "@nuxtjs/axios": "^5.12.2",
     "nuxt": "^2.14.0",
+    "nuxt-property-decorator": "^2.8.8",
     "query-string": "^6.13.4",
     "vuetify-dialog": "^2.0.11"
   },
