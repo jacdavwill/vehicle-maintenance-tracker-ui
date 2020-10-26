@@ -54,8 +54,8 @@ export default {
          fixed: false,
          items: [
             {
-               icon: "mdi-apps",
-               title: "Welcome",
+               icon: "mdi-login",
+               title: "Login",
                to: "/"
             },
             {
@@ -67,6 +67,11 @@ export default {
                icon: "mdi-plus-circle",
                title: "Add Vehicle",
                to: "/add-vehicle"
+            },
+            {
+               icon: "mdi-exit-run",
+               title: "Logout",
+               to: "/logout"
             }
          ],
          miniVariant: false,
