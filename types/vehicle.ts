@@ -1,13 +1,14 @@
 export interface Vehicle {
+  vehicleId: string
+  userId: string
+  imageUrl: string
+  registrationMonth: string
+  mileage: number
   year: number
   nickname: string
   model: string
-  mileage: number
   make: string
   color: string
-  transmission: string
-  image: string
-  lastOilChangeDate: string
-  lastTireRotationDate: string
-  lastRegistrationDate: string
+  transmissionType: string
+  energyType: string
 }

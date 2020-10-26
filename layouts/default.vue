@@ -1,7 +1,6 @@
 <template>
   <v-app dark>
     <v-navigation-drawer
-      v-model="drawer"
       :mini-variant="miniVariant"
       :clipped="clipped"
       fixed
@@ -29,7 +28,6 @@
       fixed
       app
     >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
@@ -61,7 +59,7 @@ export default {
                to: "/"
             },
             {
-               icon: "mdi-chart-bubble",
+               icon: "mdi-car",
                title: "Vehicles",
                to: "/vehicles"
             },
@@ -75,7 +73,7 @@ export default {
          right: true,
          rightDrawer: false,
          title: "Vehicle Maintenance Tracker"
-      };
+      }
    }
-};
+}
 </script>

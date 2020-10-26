@@ -15,7 +15,12 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'off', // "no-unused-vars" is currently broken (9/8/2020), but is covered by "noUnusedLocals" and "noUnusedParameters" in tsconfig.json
     'no-unused-vars': 'off',
     'no-trailing-spaces': 'error',
-    'prettier/prettier': ['error', { semi: false, singleQuote: true }]
+    'prettier/prettier': ['error', {
+      semi: false,
+      singleQuote: true,
+      bracketSpacing: true,
+      jsxBracketSameLine: true
+    }]
   },
   plugins: ['vuetify', 'prettier']
 }
