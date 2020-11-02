@@ -15,13 +15,6 @@
         </v-card-title>
         <v-card-text>
 
-<p v-if="isLoggedIn">
-      Logged in
-    </p>
-    <p v-else>
-      Not Logged in
-    </p>
-
           <p> Please login below </p>
           <label v-if="displayError" class="warning--text">
             {{errorMessage}}
@@ -31,12 +24,12 @@
           <v-text-field outlined label="Password" v-model="password" type="password"/>
         </v-card-text>
         <v-card-actions>
-          <a href="/createAccount" align="left">Don't have an account? Create one here</a>
+          <a @click="toCreateAnAccount()" align="left">Don't have an account? Create one here</a>
           <v-spacer />
           <v-btn
             color="primary"
             v-on:click="loginUser()"
-            :disabled="loading"
+            :disabled="isLoading"
           >
             Login
           </v-btn>
@@ -55,32 +48,23 @@ export default {
     email: '',
     password: '',
     authentication: 0,
-    loading: false,
     errorMessage: '',
     displayError: false,
   }),
   computed: {
-    isLoggedIn() {
-      return this.$store.state.isLoggedIn;
+    isLoading() {
+      return this.$store.loading;
     }
   },
   methods: {
     async loginUser() {
-      try {
-        this.clearError();
-        this.loading = true;
-        console.log("Logging in with email and password");
-        console.log("'" + this.email + "'   '" + this.password + "'");
-        //const response = await axios.get(url + '/login'); // API CALL. Missing stuff
-        //this.authentication = response.authentication;
-	      this.$store.commit('loggedIn', this.email, 'myauthenticationtoken')
-        this.$store.state.userAuthToken = 'token' // add this to the above method call
-        this.loading = false;
-	      this.$router.push('/vehicles');
-      } catch (error) {
-        console.log(error);
-        this.loading = false;
-      }
+      this.clearError();
+      console.log("Logging in with email and password");
+      this.$store.dispatch('authenticate', {"email": this.email, "password": this.password});
+      this.$router.push('/vehicles');
+    },
+    toCreateAnAccount() {
+      this.$router.push('/createAccount');
     },
     showError(errorMessage) {
       this.displayError = true;

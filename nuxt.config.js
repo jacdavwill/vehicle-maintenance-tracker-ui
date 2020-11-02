@@ -72,10 +72,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: (process.env.API_BASE || "https://PUT/BASE/PATH/HERE").replace(
-      /\/?$/,
-      "/"
-    ) // ensure trailing slash
+    baseURL: "http://ec2-34-212-167-238.us-west-2.compute.amazonaws.com:8080/api/"
   },
   /*
    ** vuetify module configuration

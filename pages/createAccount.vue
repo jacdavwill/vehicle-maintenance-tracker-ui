@@ -92,11 +92,11 @@
             return
            }
           // TODO: make api call and parse response
-          //const response = await axios.get(url + '/login'); // API CALL. Missing stuff
+
           this.loading = false;
           // TODO: notify user that account was successfully created and they will be redirected to the login page
 
-          window.location.href = '/';
+          this.$router.push('/');
         } catch (error) {
           console.log(error);
           this.loading = false;

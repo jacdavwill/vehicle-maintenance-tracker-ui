@@ -1,6 +1,6 @@
 import {ActionTree, MutationTree} from 'vuex'
-import {RootState, VehicleState} from '../../deleteMeTemp-master/deleteMeTemp-master/types/state'
-import {Vehicle} from '../../deleteMeTemp-master/deleteMeTemp-master/types/vehicle'
+import {RootState, VehicleState} from '../types/state'
+import {Vehicle} from '../types/vehicle'
 
 export const vehicleState = (): VehicleState => ({
   loading: false,
