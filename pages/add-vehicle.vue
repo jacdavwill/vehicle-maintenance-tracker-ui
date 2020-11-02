@@ -168,7 +168,8 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     submit() {
-      console.log(this.vehicle); // TODO: Save Vehicle to server
+      this.$store.dispatch('vehicles/addVehicle', this.vehicle)
+      this.$router.push('/vehicles')
     },
     onSelect(value = null) {
       if (value === 0 && this.$refs.form.inputs[1].isDirty) {

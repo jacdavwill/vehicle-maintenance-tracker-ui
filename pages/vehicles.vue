@@ -39,61 +39,12 @@ export default {
     loading: true,
     vehicles: []
   }),
-  computed: {
-    isLoggedIn() {
-      return this.$store.state.isLoggedIn;
-    }
-  },
   methods: {
     async getVehicles() {
-      // let v = await this.$axios.$get('/vehicles')
-      const a = {
-        vehicleId: '1',
-        year: 2020,
-        nickname: "nickname",
-        model: "Model",
-        mileage: 150000,
-        make: "Make",
-        color: "Color",
-        nextMaintenance: {
-          maintenanceItemId: "id",
-          vehicleId: "id",
-          frequencyMonths: 6,
-          frequencyMiles: 500,
-          description: "Oil Change",
-          lastCompletedDate: 'date',
-          lastCompletedMileage: 56000
-        },
-        registrationMonth: "Jan",
-        energyType: "electric",
-        transmissionType: "Manual",
-        imageUrl: "https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      }
-      const b = {
-        vehicleId: '2',
-        year: 2020,
-        nickname: "nickname2",
-        model: "Model2",
-        mileage: 150000,
-        make: "Make2",
-        nextMaintenance: {
-          maintenanceItemId: "id",
-          vehicleId: "id",
-          frequencyMonths: 6,
-          frequencyMiles: 500,
-          description: "Oil Change",
-          lastCompletedDate: 'date',
-          lastCompletedMileage: 56000
-        },
-        color: "Color2",
-        registrationMonth: "Jan",
-        energyType: "gasoline",
-        transmissionType: "Transmission2",
-        imageUrl: "https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      }
-
+      console.log('get vehicles')
+      const resp = this.$store.dispatch('vehicles/getVehicles')
       this.loading = false
-      return [a, b]
+      return resp
     },
     addVehicle() {
       this.$router.push('/add-vehicle')

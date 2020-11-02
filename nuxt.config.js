@@ -68,13 +68,6 @@ export default {
    */
   modules: [],
   /*
-   ** Axios module configuration
-   ** See https://axios.nuxtjs.org/options
-   */
-  axios: {
-    baseURL: "http://ec2-34-212-167-238.us-west-2.compute.amazonaws.com:8080/api/"
-  },
-  /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
    */
