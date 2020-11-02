@@ -136,6 +136,7 @@ import carTypes from "../static/vehicleTypes.json";
 import { Vehicle } from "../types/vehicle.ts";
 export default {
   mounted() {
+    this.$store.dispatch('preAuthenticate')
     if (!this.$store.state.userAuthToken) {
       this.$router.push('/')
     }

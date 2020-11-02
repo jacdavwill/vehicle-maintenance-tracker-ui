@@ -54,6 +54,7 @@ export default {
     this.vehicles = await this.getVehicles()
   },
   beforeMount() {
+    this.$store.dispatch('preAuthenticate')
     if (!this.$store.state.userAuthToken) {
       this.$router.push('/')
     }
