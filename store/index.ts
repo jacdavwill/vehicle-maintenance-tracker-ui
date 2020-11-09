@@ -1,8 +1,9 @@
 import { ActionTree, MutationTree } from 'vuex'
-import { RootState } from '~/types/state'
+import { RootState } from '~/types'
 import axios from 'axios'
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
+
 Vue.use(VueCookies)
 Vue.$cookies.config('1h')
 

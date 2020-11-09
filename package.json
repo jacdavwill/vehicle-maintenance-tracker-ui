@@ -19,7 +19,8 @@
     "nuxt-property-decorator": "^2.8.8",
     "query-string": "^6.13.4",
     "vue-cookies": "^1.7.4",
-    "vuetify-dialog": "^2.0.11"
+    "vuetify-dialog": "^2.0.11",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
     "@nuxt/types": "^2.14.0",
