@@ -92,11 +92,9 @@
             return
            }
           // TODO: make api call and parse response
-
           this.loading = false;
           // TODO: notify user that account was successfully created and they will be redirected to the login page
-
-          this.$router.push('/');
+          this.$router.push('/vehicles');
         } catch (error) {
           console.log(error);
           this.loading = false;
