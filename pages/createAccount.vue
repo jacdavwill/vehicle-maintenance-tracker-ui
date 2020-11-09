@@ -84,14 +84,15 @@
     methods: {
       async createAccount() {
         try {
-          this.loading = true;
-          console.log("Creating account");
+          this.loading = true
+          console.log("Creating account")
           if(this.password != this.confirmPassword) {
-            this.showError("Passwords do not match");
-            this.loading = false;
+            this.showError("Passwords do not match")
+            this.loading = false
             return
            }
           // TODO: make api call and parse response
+          this.$store.dispatch('register', {email: this.email, name: this.name, password: this.password})
           this.loading = false;
           // TODO: notify user that account was successfully created and they will be redirected to the login page
           this.$router.push('/vehicles');

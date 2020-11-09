@@ -1,16 +1,10 @@
-// <<<<<<< HEAD
-// import { User } from "~/types/user";
-//
-// export interface AuthenticationState {
-//   authenticated: boolean
-//   user: User
-// =======
 import { Vehicle } from './vehicle'
 import { NewAccount } from './newAccount'
 
 export interface RootState {
   userAuthToken?: string | undefined
   loading?: boolean
+    isLoggedIn?: boolean
 }
 
 export interface VehicleState extends RootState {
@@ -18,5 +12,4 @@ export interface VehicleState extends RootState {
 }
 export interface CreateAccountState extends RootState {
   account: NewAccount
-// >>>>>>> dev
 }

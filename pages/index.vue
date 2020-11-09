@@ -53,14 +53,14 @@ export default {
   }),
   computed: {
     isLoading() {
-      return this.$store.state.userAuthToken
+      return this.$store.state.isLoggedIn
     }
   },
   methods: {
     async loginUser() {
-      this.clearError();
+      this.clearError()
       console.log("Logging in with email and password")
-      this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
+      const authenticated = await this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
       this.$router.push('/vehicles')
     },
     toCreateAnAccount() {

@@ -1,6 +1,6 @@
 import {ActionTree, MutationTree} from 'vuex'
 import {RootState, CreateAccountState} from '../types/state'
-import {NewAccount} from '../types/newAccount'
+import {NewAccount} from '~/types/newAccount'
 
 export const createAccountMutations: MutationTree<CreateAccountState> = {
   setAccountInfo(state, account: NewAccount) {

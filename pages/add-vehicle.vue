@@ -1,12 +1,17 @@
 <template>
   <div class="d-flex justify-center">
     <v-form ref="form" v-model="valid">
+      <v-text-field
+        v-model="vehicle.imageUrl"
+        :rules="urlRules"
+        auto-select-first
+        autofocus
+        label="Image Url"
+      ></v-text-field>
       <v-autocomplete
         v-model="vehicle.make"
         :items="makes"
         :rules="[v => !!v || 'Make is required']"
-        auto-select-first
-        autofocus
         required
         label="Make"
         @change="onSelect(0)"
@@ -45,11 +50,20 @@
       ></v-text-field>
       <v-select
         ref="transmission"
-        v-model="vehicle.transmission"
+        v-model="vehicle.transmissionType"
         :items="transmissions"
         :rules="[v => !!v || 'Transmission is required']"
         clearable
         label="Transmission"
+        required
+      ></v-select>
+      <v-select
+        ref="energyType"
+        v-model="vehicle.energyType"
+        :items="energyTypes"
+        :rules="[v => !!v || 'Energy Type is required']"
+        clearable
+        label="Energy Type"
         required
       ></v-select>
       <v-menu
@@ -132,14 +146,16 @@
   </div>
 </template>
 <script>
-import carTypes from "../static/vehicleTypes.json";
-import { Vehicle } from "../types/vehicle.ts";
+import carTypes from "../static/vehicleTypes.json"
+
 export default {
-  mounted() {
-    this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.userAuthToken) {
+  async beforeMount() {
+    const preauth = await this.$store.dispatch('preAuthenticate')
+    if (!this.$store.state.isLoggedIn) {
       this.$router.push('/')
     }
+  },
+  mounted() {
     this.$refs.transmission.$refs.input.addEventListener(
       "focus",
       this.onTransmissionFocus,
@@ -153,9 +169,13 @@ export default {
     vehicle: {},
     makes: Object.keys(carTypes).sort(),
     transmissions: ["Automatic", "Manual"],
+    energyTypes: ["Electric", "Gasoline", "Natural Gas"],
     yearRules: [
       v => !!v || "Year is required",
       v => /\d{4}/.test(v) || "Year must be valid"
+    ],
+    urlRules: [
+      v => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(v)
     ],
     oilDate: false,
     tireDate: false,
@@ -169,7 +189,7 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     submit() {
-      this.$store.dispatch('vehicles/addVehicle', this.vehicle)
+      this.$store.dispatch('vehicle/addVehicle', this.vehicle)
       this.$router.push('/vehicles')
     },
     onSelect(value = null) {
