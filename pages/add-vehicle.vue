@@ -136,6 +136,7 @@ import carTypes from "../static/vehicleTypes.json";
 import { Vehicle } from "../types/vehicle.ts";
 export default {
   mounted() {
+    this.$store.dispatch('preAuthenticate')
     if (!this.$store.state.userAuthToken) {
       this.$router.push('/')
     }
@@ -168,7 +169,8 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     submit() {
-      console.log(this.vehicle); // TODO: Save Vehicle to server
+      this.$store.dispatch('vehicles/addVehicle', this.vehicle)
+      this.$router.push('/vehicles')
     },
     onSelect(value = null) {
       if (value === 0 && this.$refs.form.inputs[1].isDirty) {

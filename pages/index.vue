@@ -53,26 +53,26 @@ export default {
   }),
   computed: {
     isLoading() {
-      return this.$store.loading;
+      return this.$store.state.userAuthToken
     }
   },
   methods: {
     async loginUser() {
       this.clearError();
-      console.log("Logging in with email and password");
-      this.$store.dispatch('authenticate', {"email": this.email, "password": this.password});
-      this.$router.push('/vehicles');
+      console.log("Logging in with email and password")
+      this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
+      this.$router.push('/vehicles')
     },
     toCreateAnAccount() {
-      this.$router.push('/createAccount');
+      this.$router.push('/createAccount')
     },
     showError(errorMessage) {
-      this.displayError = true;
-      this.errorMessage = "Error: " + errorMessage;
+      this.displayError = true
+      this.errorMessage = "Error: " + errorMessage
     },
     clearError() {
-      this.displayError = false;
-      this.errorMessage = '';
+      this.displayError = false
+      this.errorMessage = ''
     }
   }
 }
