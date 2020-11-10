@@ -1,4 +1,3 @@
-import { User } from './user.ts'
 import { Vehicle } from './vehicle'
 
 export interface RootState {
