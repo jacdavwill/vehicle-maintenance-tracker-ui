@@ -17,7 +17,7 @@ function delay(ms: number) {
 export const state = (): RootState => ({
   loading: false,
   userAuthToken: undefined,
-    isLoggedIn: false
+   isLoggedIn: false
 })
 
 export const mutations: MutationTree<RootState> = {
