@@ -108,7 +108,7 @@
             return
           }
           // TODO: make api call and parse response
-          await this.$store.dispatch('createAccount', {"email": this.email, "password": this.password, "displayName": this.displayName, "phone": this.parsedPhone});
+          await this.$store.dispatch('createAccount', {"email": this.email, "password": this.password, "displayName": this.displayName, "phone": this.parsedPhone()});
           // TODO: notify user that account was successfully created and they will be redirected to the login page
           this.$router.push('/vehicles');
         } catch (error) {

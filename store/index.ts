@@ -85,6 +85,7 @@ export const actions: ActionTree<RootState, RootState> = {
   async createAccount({commit}, account: NewAccount) {
     commit('setLoading', true)
     Vue.$cookies.remove('vmt-authToken')
+    console.log(account)
     await axios.post(`user/register`, account)
     .then(response => {
       console.log(response)

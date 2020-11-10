@@ -236,8 +236,7 @@ export default {
   beforeMount() {
     console.log("checking authentication")
     this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.userAuthToken || this.$store.state.userAuthToken === 'null') {
-      console.log("back to login")
+    if (!this.$store.state.isLoggedIn) {
       this.$router.push('/')
     }
   }
