@@ -25,7 +25,7 @@
             </v-col>
             <v-col>
               <v-text-field
-                label="Phone number - e.g. (951) 123-4567"
+                label="Phone number"
                 required
                 v-model="phoneInput"
                 v-on:change="checkPhone"
