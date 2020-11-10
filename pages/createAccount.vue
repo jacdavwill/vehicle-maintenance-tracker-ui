@@ -18,16 +18,17 @@
           <v-row>
             <v-col>
               <v-text-field
-                label="First name"
+                label="Display name"
                 required
-                v-model="firstName"
+                v-model="displayName"
               ></v-text-field>
             </v-col>
             <v-col>
               <v-text-field
-                label="Last name"
+                label="Phone number - e.g. (951) 123-4567"
                 required
-                v-model="lastName"
+                v-model="phoneInput"
+                v-on:change="checkPhone"
               ></v-text-field>
             </v-col>
             <v-col>
@@ -79,15 +80,15 @@
     },
     data: () => ({
       email: '',
-      firstName: '',
-      lastName: '',
+      displayName: '',
+      phoneInput: '', //phone input by user (may include parentheses, spaces, and dashes)
       password: '',
       confirmPassword:'',
       errorMessage: '',
       displayError: false,
     }),
     computed: {
-      isLoading() {
+      isLoading: function () {
         return this.$store.state.loading
       }
     },
@@ -95,7 +96,7 @@
       async createAccount() {
         try {
           this.clearError()
-          if(!this.password || !this.confirmPassword || !this.email || !this.firstName || !this.lastName) {
+          if(!this.password || !this.confirmPassword || !this.email || !this.displayName || !this.phoneInput) {
             this.showError("Please complete all fields")
             return
           }
@@ -103,8 +104,11 @@
             this.showError("Passwords do not match");
             return
            }
+          if(!this.checkPhone) {
+            return
+          }
           // TODO: make api call and parse response
-          await this.$store.dispatch('createAccount', {"email": this.email, "password": this.password, "firstName": this.firstName, "lastName": this.lastName});
+          await this.$store.dispatch('createAccount', {"email": this.email, "password": this.password, "displayName": this.displayName, "phone": this.parsedPhone});
           // TODO: notify user that account was successfully created and they will be redirected to the login page
           this.$router.push('/vehicles');
         } catch (error) {
@@ -112,6 +116,18 @@
           this.showError(error);
           // TODO: notify user that account was not created and why
         }
+      },
+      parsedPhone: function () {
+        return this.phoneInput.replace(/\(|\)|-| /g, '') //replace '/' '-' and ' ' with ''
+      },
+      checkPhone: function () {
+        let valid = this.parsedPhone().length == 10 && !this.parsedPhone().match(/[^0-9]/g) //assumes american phone number, dosen't include country code.
+        if(!valid) {
+          this.showError("Invalid phone number")
+        } else {
+          this.clearError()
+        }
+        return valid
       },
       toLogin() {
         this.$router.push('/');
