@@ -212,6 +212,14 @@ export default {
     registrationDateFormatted() {
       return this.formatDate(this.vehicle.lastRegistrationDate);
     }
+  },
+  beforeMount() {
+    console.log("checking authentication")
+    this.$store.dispatch('preAuthenticate')
+    if (!this.$store.state.userAuthToken || this.$store.state.userAuthToken === 'null') {
+      console.log("back to login")
+      this.$router.push('/')
+    }
   }
 };
 </script>

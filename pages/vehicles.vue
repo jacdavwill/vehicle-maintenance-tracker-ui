@@ -41,8 +41,7 @@ export default {
   }),
   methods: {
     async getVehicles() {
-      console.log('get vehicles')
-      const resp = this.$store.dispatch('vehicles/getVehicles')
+      const resp = this.$store.dispatch('vehicle/getVehicles')
       this.loading = false
       return resp
     },
@@ -55,7 +54,7 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.userAuthToken) {
+    if (!this.$store.state.userAuthToken || this.$store.state.userAuthToken === 'null') {
       this.$router.push('/')
     }
   }

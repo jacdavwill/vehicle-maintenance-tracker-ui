@@ -27,7 +27,7 @@ export const actions: ActionTree<VehicleState, RootState> = {
   async getVehicles({commit}) {
     return await axios.get(`vehicles`).then(response => {
       commit('updateVehicles', response)
-      return response
+      return response.data
     })
       .catch((error) => console.log(error))
   },

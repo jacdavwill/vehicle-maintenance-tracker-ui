@@ -7,7 +7,7 @@
     <v-flex
       xs12
       sm8
-      md6
+      md6y
     >
       <v-card>
         <v-card-title class="headline">
@@ -53,15 +53,23 @@ export default {
   }),
   computed: {
     isLoading() {
-      return this.$store.state.userAuthToken
+      return this.$store.state.loading
     }
   },
   methods: {
     async loginUser() {
-      this.clearError();
-      console.log("Logging in with email and password")
-      this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
-      this.$router.push('/vehicles')
+        this.clearError();
+        if(!this.email || !this.password) {
+          this.showError("Please complete all fields")
+          return
+        }
+        console.log("Logging in with email and password")
+        this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
+        .then( () => {
+          console.log("going to vehicles page")
+          this.$router.push('/vehicles')
+        })
+        .catch((error) => this.showError(error))
     },
     toCreateAnAccount() {
       this.$router.push('/createAccount')

@@ -18,9 +18,16 @@
           <v-row>
             <v-col>
               <v-text-field
-                label="First and last name"
+                label="First name"
                 required
-                v-model="name"
+                v-model="firstName"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                label="Last name"
+                required
+                v-model="lastName"
               ></v-text-field>
             </v-col>
             <v-col>
@@ -50,17 +57,15 @@
         </v-container>
       </v-card-text>
       <v-card-actions>
-        <form action="/">
-          <v-btn
-            type="submit"
-            :disabled="loading">
-            Cancel
-          </v-btn>
-        </form>
+        <v-btn
+          :disabled="isLoading"
+          v-on:click="toLogin()">
+          Cancel
+        </v-btn>
         <v-btn
           v-on:click="createAccount()"
           color="secondary"
-          :disabled="loading">
+          :disabled="isLoading">
           Create Account
         </v-btn>
       </v-card-actions>
@@ -74,32 +79,42 @@
     },
     data: () => ({
       email: '',
-      name: '',
+      firstName: '',
+      lastName: '',
       password: '',
       confirmPassword:'',
-      loading: false,
       errorMessage: '',
       displayError: false,
     }),
+    computed: {
+      isLoading() {
+        return this.$store.state.loading
+      }
+    },
     methods: {
       async createAccount() {
         try {
-          this.loading = true;
-          console.log("Creating account");
+          this.clearError()
+          if(!this.password || !this.confirmPassword || !this.email || !this.firstName || !this.lastName) {
+            this.showError("Please complete all fields")
+            return
+          }
           if(this.password != this.confirmPassword) {
             this.showError("Passwords do not match");
-            this.loading = false;
             return
            }
           // TODO: make api call and parse response
-          this.loading = false;
+          await this.$store.dispatch('createAccount', {"email": this.email, "password": this.password, "firstName": this.firstName, "lastName": this.lastName});
           // TODO: notify user that account was successfully created and they will be redirected to the login page
           this.$router.push('/vehicles');
         } catch (error) {
           console.log(error);
-          this.loading = false;
+          this.showError(error);
           // TODO: notify user that account was not created and why
         }
+      },
+      toLogin() {
+        this.$router.push('/');
       },
       showError(errorMessage) {
         this.displayError = true;
