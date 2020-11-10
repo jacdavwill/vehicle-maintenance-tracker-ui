@@ -42,7 +42,7 @@ export const mutations: MutationTree<RootState> = {
 export const actions: ActionTree<RootState, RootState> = {
   async authenticate({ commit }, login: { email: string; password: string }) {
     commit('setLoading', true)
-    Vue.$cookies.remove('vmt-authToken')
+    commit('setUserAuthToken', null)
     await axios
       .post('user/login', login)
       .then(response => {
@@ -84,7 +84,7 @@ export const actions: ActionTree<RootState, RootState> = {
   },
   async createAccount({commit}, account: NewAccount) {
     commit('setLoading', true)
-    Vue.$cookies.remove('vmt-authToken')
+    commit('setUserAuthToken', null)
     console.log(account)
     await axios.post(`user/register`, account)
     .then(response => {
