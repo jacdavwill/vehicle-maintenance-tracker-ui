@@ -20,8 +20,8 @@
             {{errorMessage}}
           </label>
           <br>
-          <v-text-field outlined label="Email" v-model="email" />
-          <v-text-field outlined label="Password" v-model="password" type="password"/>
+          <v-text-field outlined label="Email" v-model="email" @keyup.enter="loginUser"/>
+          <v-text-field outlined label="Password" v-model="password" type="password" @keyup.enter="loginUser"/>
         </v-card-text>
         <v-card-actions>
           <a @click="toCreateAnAccount()" align="left">Don't have an account? Create one here</a>

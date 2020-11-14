@@ -4,6 +4,7 @@
       <v-text-field
         v-model="vehicle.imageUrl"
         :rules="urlRules"
+        :counter="300"
         auto-select-first
         autofocus
         label="Image Url"
@@ -32,7 +33,11 @@
         required
         @input="onSelect(2)"
       ></v-text-field>
-      <v-text-field v-model="vehicle.nickname" label="Nickname"></v-text-field>
+      <v-text-field
+        v-model="vehicle.nickname"
+        label="Nickname"
+        :rules="[v => !!v && v.length <= 25]"
+        :counter="25"></v-text-field>
       <v-text-field
         v-model="vehicle.mileage"
         :rules="[
@@ -44,7 +49,11 @@
       ></v-text-field>
       <v-text-field
         v-model="vehicle.color"
-        :rules="[v => !!v || 'Color is required']"
+        :rules="[
+          v => !!v || 'Color is required',
+          v => !!v && v.length <= 15
+        ]"
+        :counter="15"
         label="Color"
         required
       ></v-text-field>
@@ -175,7 +184,8 @@ export default {
       v => /\d{4}/.test(v) || "Year must be valid"
     ],
     urlRules: [
-      v => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(v)
+      v => /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/.test(v) || "Invalid URL",
+      v => !!v && v.length <= 300
     ],
     oilDate: false,
     tireDate: false,
