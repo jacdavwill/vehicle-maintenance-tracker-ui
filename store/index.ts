@@ -101,5 +101,19 @@ export const actions: ActionTree<RootState, RootState> = {
       throw "Unknown error creating account"
     })
     commit('setLoading', false)
+  },
+  async requestReset({ commit }, email: string) {
+    commit('setLoading', true)
+    await axios.post('user/reset', null, { headers: { Email: email } })
+    commit('setLoading', false)
+  },
+  async resetPassword({ commit }, account: { password: string; resetToken: string }) {
+    commit('setLoading', true)
+    await axios.put(
+      'user',
+      { password: account.password },
+      { headers: { resetToken: account.resetToken, authToken: account.resetToken } }
+    )
+    commit('setLoading', false)
   }
 }
