@@ -5,7 +5,7 @@ import {RootState, VehicleState} from '~/types/state'
 
 export const state = (): VehicleState => ({
   loading: false,
-  vehicles: []
+  vehicles: [],
 })
 
 export const mutations: MutationTree<VehicleState> = {
@@ -16,9 +16,8 @@ export const mutations: MutationTree<VehicleState> = {
     return state.vehicles
   },
   getVehicle(state, vehicleId: string) {
-    return state.vehicles
     return state.vehicles.filter(vehicle => {
-      vehicles.vehicleId == vehicleId
+      vehicle.vehicleId == vehicleId
     })[0]
   },
   updateVehicles(state, newVehicle: Vehicle) {
@@ -26,6 +25,10 @@ export const mutations: MutationTree<VehicleState> = {
       vehicle => vehicle.vehicleId !== newVehicle.vehicleId
     )
     state.vehicles.push(newVehicle)
+  },
+  setVehicleToEdit(state, vehicleId) {
+    console.log('setting vehicleToEdit: ' + vehicleId)
+    state.vehicleToEdit = vehicleId
   }
 }
 

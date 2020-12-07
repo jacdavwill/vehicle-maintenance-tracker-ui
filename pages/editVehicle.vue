@@ -192,15 +192,17 @@ export default {
     registrationDate: false
   }),
   created() {
-    let vehicleId = this.$route.params.vehicleId
-    this.vehicle = this.$store.commit('getVehicle', vehicleId)
+    console.log(this.$store)
+    let vehicleId = this.$store.state.vehicleToEdit
+    console.log("editVehicle got vehicleId: " + vehicleId)
+    this.vehicle = this.$store.commit('vehicle/getVehicle', vehicleId)
   },
   methods: {
     reserve() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
     },
-    submit() {
+    async submit() {
       await this.$store.dispatch('vehicle/editVehicle', this.vehicle)
       this.$router.push('/vehicles')
     },
@@ -245,9 +247,9 @@ export default {
       return this.formatDate(this.vehicle.lastRegistrationDate);
     }
   },
-  beforeMount() {
+  async beforeMount() {
     console.log("checking authentication")
-    this.$store.dispatch('preAuthenticate')
+    await this.$store.dispatch('preAuthenticate')
     if (!this.$store.state.isLoggedIn) {
       this.$router.push('/')
     }

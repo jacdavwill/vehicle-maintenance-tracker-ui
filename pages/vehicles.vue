@@ -28,7 +28,7 @@
             <div>Transmission: {{ vehicle.transmissionType }}</div>
             <div>Fuel: {{ vehicle.energyType }}</div>
           </v-card-text>
-          <v-btn @click="editVehicle({{vehicle}})">
+          <v-btn @click="editVehicle(vehicle)">
             Edit vehicle
           </v-btn>
         </v-card>
@@ -50,12 +50,13 @@ export default {
   }),
   methods: {
     async getVehicles() {
-      const resp = this.$store.dispatch('vehicles/getVehicles')
+      const resp = this.$store.dispatch('vehicle/getVehicles')
       this.loading = false
       return resp
     },
     editVehicle(vehicle) {
-      this.$router.push('/editVehicle/${vehicle.vehicleId}')
+      this.$store.commit('vehicle/setVehicleToEdit', vehicle.vehicleId)
+      this.$router.push('/editVehicle')
     },
     addVehicle() {
       this.$router.push('/add-vehicle')

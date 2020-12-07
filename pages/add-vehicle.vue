@@ -242,9 +242,9 @@ export default {
       return this.formatDate(this.vehicle.lastRegistrationDate);
     }
   },
-  beforeMount() {
+  async beforeMount() {
     console.log("checking authentication")
-    this.$store.dispatch('preAuthenticate')
+    await this.$store.dispatch('preAuthenticate')
     if (!this.$store.state.isLoggedIn) {
       this.$router.push('/')
     }
