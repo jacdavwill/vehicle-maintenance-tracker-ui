@@ -198,9 +198,10 @@ export default {
 
       setTimeout(() => (this.loading = false), 2000);
     },
-    submit() {
-      this.$store.dispatch('vehicle/addVehicle', this.vehicle)
-      this.$router.push('/vehicles')
+    async submit() {
+      this.$store.dispatch('vehicle/addVehicle', this.vehicle).then(_ => {
+        this.$router.push('/vehicles')
+      })
     },
     onSelect(value = null) {
       if (value === 0 && this.$refs.form.inputs[1].isDirty) {
