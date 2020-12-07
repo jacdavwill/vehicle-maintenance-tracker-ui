@@ -1,5 +1,6 @@
 import { ActionTree, MutationTree } from 'vuex'
 import { RootState } from '~/types'
+import { NewAccount } from '~/types/newAccount.ts'
 import axios from 'axios'
 import Vue from 'vue'
 import VueCookies from 'vue-cookies'
@@ -17,7 +18,7 @@ function delay(ms: number) {
 export const state = (): RootState => ({
   loading: false,
   userAuthToken: undefined,
-   isLoggedIn: false
+  isLoggedIn: false
 })
 
 export const mutations: MutationTree<RootState> = {
@@ -25,45 +26,46 @@ export const mutations: MutationTree<RootState> = {
     state.loading = b
   },
   setUserAuthToken(state, authToken: string) {
-      if (authToken == null) {
-          state.userAuthToken = undefined
-          state.isLoggedIn = false
-      } else {
-          state.isLoggedIn = true
-          state.userAuthToken = authToken
-      }
+    if(!authToken) {
+        state.isLoggedIn = false
+    } else if(authToken === state.userAuthToken) {
+        return
+    } else {
+        state.isLoggedIn = true
+        state.userAuthToken = authToken
+        axios.defaults.headers.common['authToken'] = authToken
+        Vue.$cookies.set('vmt-authToken', authToken)
+    }
   }
 }
 
 export const actions: ActionTree<RootState, RootState> = {
   async authenticate({ commit }, login: { email: string; password: string }) {
     commit('setLoading', true)
-    return axios
+    commit('setUserAuthToken', null)
+    await axios
       .post('user/login', login)
       .then(response => {
         const authToken = response.data.authToken
-          Vue.$cookies.set('vmt-authToken', authToken)
-        axios.defaults.headers.common['authToken'] = authToken
         commit('setUserAuthToken', authToken)
-        commit('setLoading', false)
-          console.log('finished setting auth')
-          return true
+        commit('setLoading', false);
       })
-      .catch(() => {
-        // maybe show failure dialog box, possibly clear last entered email and username
-        commit('setLoading', false)
-        console.log("error logging in")
-        return false
+      .catch(error => {
+        commit('setLoading', false);
+        console.log("error logging in: ")
+        console.log(error.response)
+        if(error.response)
+            throw error.response.data.error
+        throw "Unknown error logging in"
       })
   },
   async preAuthenticate({ commit }) {
     try {
       const auth = Vue.$cookies.get('vmt-authToken')
       console.log(`found cookie: ${auth}`)
-        commit('setUserAuthToken', auth)
-        axios.defaults.headers.common['authToken'] = auth
+      commit('setUserAuthToken', auth)
     } catch(e) {
-      console.log(`cookie doesn't exist`)
+      console.log('cookie does not exist')
     }
   },
     register({commit}, account: {email: string, name: string, password: string}) {
@@ -77,8 +79,27 @@ export const actions: ActionTree<RootState, RootState> = {
           })
     },
   logout({ commit }) {
-    axios.defaults.headers.common['authToken'] = ''
     commit('setUserAuthToken', null)
     Vue.$cookies.remove('vmt-authToken')
+  },
+  async createAccount({commit}, account: NewAccount) {
+    commit('setLoading', true)
+    commit('setUserAuthToken', null)
+    console.log(account)
+    await axios.post(`user/register`, account)
+    .then(response => {
+      console.log(response)
+      const authToken = response.data.authToken
+      commit('setUserAuthToken', authToken)
+      commit('setLoading', false)
+    })
+    .catch(error => {
+      commit('setLoading', false);
+      console.log("error creating account")
+      if(error.response)
+        throw error.response.data.error
+      throw "Unknown error creating account"
+    })
+    commit('setLoading', false)
   }
 }

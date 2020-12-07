@@ -27,8 +27,7 @@ export const actions: ActionTree<VehicleState, RootState> = {
   async getVehicles({state, commit}) {
       const rawVehicles = await axios.get(`vehicles`).then(response => {
           return response.data
-      })
-          .catch((error) => console.log(error))
+      }).catch((error) => console.log(error))
       const finalVehicles: Vehicle[] = []
       for (let vehicle of rawVehicles) {
           const main = await axios.get(`maintenance/events/${vehicle.vehicleId}`).then(response => {
