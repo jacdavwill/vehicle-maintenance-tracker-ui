@@ -75,87 +75,15 @@
         label="Energy Type"
         required
       ></v-select>
-      <v-menu
-        v-model="oilDate"
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        max-width="290px"
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="oilDateFormatted"
-            label="Date of Last Oil Change"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="vehicle.lastOilChangeDate"
-          no-title
-          @input="oilDate = false"
-        ></v-date-picker>
-      </v-menu>
-      <v-menu
-        v-model="tireDate"
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        max-width="290px"
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="tireDateFormatted"
-            label="Date of Last Tire Rotation"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="vehicle.lastTireRotationDate"
-          no-title
-          @input="tireDate = false"
-        ></v-date-picker>
-      </v-menu>
-      <v-menu
-        v-model="registrationDate"
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        max-width="290px"
-        min-width="290px"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="registrationDateFormatted"
-            label="Date of Last Registration"
-            prepend-icon="mdi-calendar"
-            readonly
-            v-bind="attrs"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
-          v-model="vehicle.lastRegistrationDate"
-          no-title
-          @input="registrationDate = false"
-        ></v-date-picker>
-      </v-menu>
-
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="submit">
-        Add Vehicle
+        Edit Vehicle
       </v-btn>
     </v-form>
   </div>
 </template>
 <script>
 import carTypes from "../static/vehicleTypes.json"
+import copy from 'lodash'
 
 export default {
   async beforeMount() {
@@ -165,17 +93,17 @@ export default {
     }
   },
   mounted() {
-    this.$refs.transmission.$refs.input.addEventListener(
-      "focus",
-      this.onTransmissionFocus,
-      true
-    )
+    // this.$refs.transmission.$refs.input.addEventListener(
+    //   "focus",
+    //   this.onTransmissionFocus,
+    //   true
+    // )
   },
   data: () => ({
     loading: false,
     valid: false,
     selection: 1,
-    vehicle: 0,
+    vehicle: null,
     makes: Object.keys(carTypes).sort(),
     transmissions: ["Automatic", "Manual"],
     energyTypes: ["Electric", "Gasoline", "Natural Gas"],
@@ -192,10 +120,11 @@ export default {
     registrationDate: false
   }),
   created() {
-    console.log(this.$store)
-    let vehicleId = this.$store.state.vehicleToEdit
-    console.log("editVehicle got vehicleId: " + vehicleId)
-    this.vehicle = this.$store.commit('vehicle/getVehicle', vehicleId)
+    let vehicleId = this.$store.state.vehicle.vehicleToEdit
+    let veh = this.$store.state.vehicle.vehicles.filter(vehicle => {
+      return vehicle.vehicleId.toString() === vehicleId.toString()
+    })
+    this.vehicle = copy.cloneDeep(veh[0])
   },
   methods: {
     reserve() {
@@ -247,12 +176,12 @@ export default {
       return this.formatDate(this.vehicle.lastRegistrationDate);
     }
   },
-  async beforeMount() {
-    console.log("checking authentication")
-    await this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.isLoggedIn) {
-      this.$router.push('/')
-    }
-  }
+  // async beforeMount() {
+  //   console.log("checking authentication")
+  //   await this.$store.dispatch('preAuthenticate')
+  //   if (!this.$store.state.isLoggedIn) {
+  //     this.$router.push('/')
+  //   }
+  // }
 };
 </script>

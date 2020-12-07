@@ -6,6 +6,7 @@ import {RootState, VehicleState} from '~/types/state'
 export const state = (): VehicleState => ({
   loading: false,
   vehicles: [],
+    vehicleToEdit: undefined
 })
 
 export const mutations: MutationTree<VehicleState> = {
@@ -16,9 +17,10 @@ export const mutations: MutationTree<VehicleState> = {
     return state.vehicles
   },
   getVehicle(state, vehicleId: string) {
-    return state.vehicles.filter(vehicle => {
-      vehicle.vehicleId == vehicleId
-    })[0]
+    let ans = state.vehicles.filter(vehicle => {
+      return vehicle.vehicleId.toString() === vehicleId.toString()
+    })
+      return ans[0]
   },
   updateVehicles(state, newVehicle: Vehicle) {
     state.vehicles = state.vehicles.filter(
@@ -47,7 +49,7 @@ export const actions: ActionTree<VehicleState, RootState> = {
           }
           finalVehicles.push(vehicle)
       }
-      commit('updateVehicles', finalVehicles)
+      commit('setVehicles', finalVehicles)
       return finalVehicles
     return []
   },

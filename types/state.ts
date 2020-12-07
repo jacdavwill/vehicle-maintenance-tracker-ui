@@ -7,5 +7,5 @@ export interface RootState {
 }
 export interface VehicleState extends RootState {
   vehicles: Vehicle[]
-  vehicleToEdit?: string //this needed because passing parameters through router.push() is not possible with the current setup
+    vehicleToEdit?: string //this needed because passing parameters through router.push() is not possible with the current setup
 }
