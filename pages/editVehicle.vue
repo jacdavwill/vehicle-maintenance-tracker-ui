@@ -149,7 +149,7 @@
       </v-menu>
 
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="submit">
-        Add Vehicle
+        Save Vehicle
       </v-btn>
     </v-form>
   </div>
@@ -192,9 +192,7 @@ export default {
     registrationDate: false
   }),
   created() {
-    console.log(this.$store)
-    let vehicleId = this.$store.state.vehicleToEdit
-    console.log("editVehicle got vehicleId: " + vehicleId)
+    let vehicleId = this.$store.state.vehicle.vehicleToEdit
     this.vehicle = this.$store.commit('vehicle/getVehicle', vehicleId)
   },
   methods: {

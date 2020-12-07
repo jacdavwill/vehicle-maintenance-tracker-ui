@@ -16,17 +16,17 @@ export const mutations: MutationTree<VehicleState> = {
     return state.vehicles
   },
   getVehicle(state, vehicleId: string) {
-    return state.vehicles.filter(vehicle => {
-      vehicle.vehicleId == vehicleId
-    })[0]
+    let filtered = state.vehicles.filter(vehicle => vehicle.vehicleId == vehicleId)
+    console.log(filtered)
+    return filtered[0]
   },
   updateVehicles(state, newVehicle: Vehicle) {
-    state.vehicles = state.vehicles.filter(
-      vehicle => vehicle.vehicleId !== newVehicle.vehicleId
-    )
+    state.vehicles = state.vehicles.filter(vehicle => {
+        return vehicle.vehicleId !== newVehicle.vehicleId
+    })
     state.vehicles.push(newVehicle)
   },
-  setVehicleToEdit(state, vehicleId) {
+  setVehicleToEdit(state, vehicleId: string) {
     console.log('setting vehicleToEdit: ' + vehicleId)
     state.vehicleToEdit = vehicleId
   }
@@ -35,6 +35,8 @@ export const mutations: MutationTree<VehicleState> = {
 export const actions: ActionTree<VehicleState, RootState> = {
   async getVehicles({state, commit}) {
       const rawVehicles = await axios.get(`vehicles`).then(response => {
+          console.log("got vehicles: ")
+          console.log(response.data)
           return response.data
       }).catch((error) => console.log(error))
       const finalVehicles: Vehicle[] = []
