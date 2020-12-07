@@ -1,36 +1,26 @@
 <template>
-  <v-layout
-    column
-    justify-center
-    align-center
-  >
-    <v-flex
-      xs12
-      sm8
-      md6
-    >
+  <v-layout column justify-center align-center>
+    <v-flex xs12 sm8 md6>
       <v-card>
         <v-card-title class="headline">
           Welcome to the Vehicle Maintenance Tracker
         </v-card-title>
         <v-card-text>
-
-          <p> Please login below </p>
+          <p>Please login below</p>
           <label v-if="displayError" class="warning--text">
-            {{errorMessage}}
+            {{ errorMessage }}
           </label>
-          <br>
-          <v-text-field outlined label="Email" v-model="email" @keyup.enter="loginUser"/>
-          <v-text-field outlined label="Password" v-model="password" type="password" @keyup.enter="loginUser"/>
+          <br />
+          <v-text-field outlined label="Email" v-model="email" @keyup.enter="loginUser" />
+          <v-text-field outlined label="Password" v-model="password" type="password" @keyup.enter="loginUser" />
         </v-card-text>
         <v-card-actions>
-          <a @click="toCreateAnAccount()" align="left">Don't have an account? Create one here</a>
+          <div>
+            <a @click="toCreateAnAccount()" align="left">Don't have an account? Create one here</a><br />
+            <a @click="toRequestPasswordReset()">Forgot your password? Reset your password here</a>
+          </div>
           <v-spacer />
-          <v-btn
-            color="primary"
-            v-on:click="loginUser()"
-            :disabled="isLoading"
-          >
+          <v-btn color="primary" v-on:click="loginUser()" :disabled="isLoading">
             Login
           </v-btn>
         </v-card-actions>
@@ -40,16 +30,14 @@
 </template>
 
 <script>
-
 export default {
-  components: {
-  },
+  components: {},
   data: () => ({
     email: '',
     password: '',
     authentication: 0,
     errorMessage: '',
-    displayError: false,
+    displayError: false
   }),
   computed: {
     isLoading() {
@@ -58,25 +46,29 @@ export default {
   },
   methods: {
     async loginUser() {
-        this.clearError();
-        if(!this.email || !this.password) {
-          this.showError("Please complete all fields")
-          return
-        }
-        console.log("Logging in with email and password")
-        this.$store.dispatch('authenticate', {"email": this.email, "password": this.password})
-        .then( () => {
-          console.log("going to vehicles page")
+      this.clearError()
+      if (!this.email || !this.password) {
+        this.showError('Please complete all fields')
+        return
+      }
+      console.log('Logging in with email and password')
+      this.$store
+        .dispatch('authenticate', { email: this.email, password: this.password })
+        .then(() => {
+          console.log('going to vehicles page')
           this.$router.push('/vehicles')
         })
-        .catch((error) => this.showError(error))
+        .catch(error => this.showError(error))
     },
     toCreateAnAccount() {
       this.$router.push('/createAccount')
     },
+    toRequestPasswordReset() {
+      this.$router.push('/request-reset')
+    },
     showError(errorMessage) {
       this.displayError = true
-      this.errorMessage = "Error: " + errorMessage
+      this.errorMessage = 'Error: ' + errorMessage
     },
     clearError() {
       this.displayError = false
