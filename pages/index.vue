@@ -52,8 +52,8 @@ export default {
     displayError: false,
   }),
   computed: {
-    isLoading() {
-      return this.$store.state.isLoggedIn
+    isLoggedIn() {
+      return this.$store.state.userAuthToken
     }
   },
   methods: {

@@ -40,8 +40,7 @@ export default {
   }),
   methods: {
     async getVehicles() {
-      console.log('get vehicles')
-      const resp = this.$store.dispatch('vehicle/getVehicles')
+      const resp = this.$store.dispatch('vehicles/getVehicles')
       this.loading = false
       return resp
     },
