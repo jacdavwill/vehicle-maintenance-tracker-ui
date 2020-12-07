@@ -13,6 +13,8 @@
         v-model="vehicle.make"
         :items="makes"
         :rules="[v => !!v || 'Make is required']"
+        auto-select-first
+        autofocus
         required
         label="Make"
         @change="onSelect(0)"
@@ -195,6 +197,7 @@ export default {
   methods: {
     reserve() {
       this.loading = true;
+
       setTimeout(() => (this.loading = false), 2000);
     },
     submit() {
@@ -240,12 +243,6 @@ export default {
     },
     registrationDateFormatted() {
       return this.formatDate(this.vehicle.lastRegistrationDate);
-    }
-  },
-  async beforeMount() {
-    await this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.isLoggedIn) {
-      this.$router.push('/')
     }
   }
 };
