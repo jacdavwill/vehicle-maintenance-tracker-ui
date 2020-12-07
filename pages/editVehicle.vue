@@ -78,6 +78,9 @@
       <v-btn :disabled="!valid" color="success" class="mr-4" @click="submit">
         Edit Vehicle
       </v-btn>
+      <v-btn color = "red" class="mr-4" @click="deleteVehicle">
+        Delete Vehicle
+      </v-btn>
     </v-form>
   </div>
 </template>
@@ -133,6 +136,10 @@ export default {
     },
     async submit() {
       await this.$store.dispatch('vehicle/editVehicle', this.vehicle)
+      this.$router.push('/vehicles')
+    },
+    async deleteVehicle() {
+      await this.$store.dispatch('vehicle/deleteVehicle', this.vehicle.vehicleId)
       this.$router.push('/vehicles')
     },
     onSelect(value = null) {

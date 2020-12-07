@@ -14,23 +14,13 @@ export const mutations: MutationTree<VehicleState> = {
   setVehicles(state, vehicles: Vehicle[]) {
     state.vehicles = vehicles
   },
-  getVehicles(state) {
-    return state.vehicles
-  },
-  getVehicle(state, vehicleId: string) {
-    let ans = state.vehicles.filter(vehicle => {
-      return vehicle.vehicleId.toString() === vehicleId.toString()
-    })
-      return ans[0]
-  },
   updateVehicles(state, newVehicle: Vehicle) {
-    state.vehicles = state.vehicles.filter(vehicle => {
-        return vehicle.vehicleId !== newVehicle.vehicleId
-    })
-    state.vehicles.push(newVehicle)
-  },
-  setVehicleToEdit(state, vehicleId) {
-    console.log('setting vehicleToEdit: ' + vehicleId)
+      state.vehicles = state.vehicles.filter(vehicle => {
+          return vehicle.vehicleId !== newVehicle.vehicleId
+      })
+      state.vehicles.push(newVehicle)
+    },
+  setVehicleToEdit(state, vehicleId: string) {
     state.vehicleToEdit = vehicleId
   }
 }
@@ -69,7 +59,7 @@ export const actions: ActionTree<VehicleState, RootState> = {
     return []
   },
   async editVehicle({commit}, vehicle: Vehicle) {
-    axios.put(`vehicles/${vehicle.vehicleId}`, vehicle).then(response => {
+    await axios.put(`vehicles/${vehicle.vehicleId}`, vehicle).then(response => {
       commit('updateVehicles', vehicle)
     })
   },
@@ -108,6 +98,6 @@ export const actions: ActionTree<VehicleState, RootState> = {
     })
   },
   async deleteVehicle({commit}, vehicleId: string) {
-    axios.delete(`vehicles/${vehicleId}`)
+    await axios.delete("vehicles/" + vehicleId)
   }
 }
