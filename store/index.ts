@@ -62,7 +62,6 @@ export const actions: ActionTree<RootState, RootState> = {
   async preAuthenticate({ commit }) {
     try {
       const auth = Vue.$cookies.get('vmt-authToken')
-      console.log(`found cookie: ${auth}`)
       commit('setUserAuthToken', auth)
     } catch(e) {
       console.log('cookie does not exist')
@@ -72,7 +71,6 @@ export const actions: ActionTree<RootState, RootState> = {
       axios.post('/user/register', account)
           .then(response => {
               const authToken = response.data.authToken
-              console.log(authToken);
               axios.defaults.headers.common['authToken'] = authToken
               commit('setUserAuthToken', authToken)
               Vue.$cookies.set('vmt-authToken', authToken)
@@ -85,7 +83,6 @@ export const actions: ActionTree<RootState, RootState> = {
   async createAccount({commit}, account: NewAccount) {
     commit('setLoading', true)
     commit('setUserAuthToken', null)
-    console.log(account)
     await axios.post(`user/register`, account)
     .then(response => {
       console.log(response)
@@ -100,6 +97,20 @@ export const actions: ActionTree<RootState, RootState> = {
         throw error.response.data.error
       throw "Unknown error creating account"
     })
+    commit('setLoading', false)
+  },
+  async requestReset({ commit }, email: string) {
+    commit('setLoading', true)
+    await axios.post('user/reset', null, { headers: { Email: email } })
+    commit('setLoading', false)
+  },
+  async resetPassword({ commit }, account: { password: string; resetToken: string }) {
+    commit('setLoading', true)
+    await axios.put(
+      'user',
+      { password: account.password },
+      { headers: { resetToken: account.resetToken, authToken: account.resetToken } }
+    )
     commit('setLoading', false)
   }
 }

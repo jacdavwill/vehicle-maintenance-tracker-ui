@@ -5,5 +5,6 @@ export interface maintenanceItem {
   frequencyMiles: number,
   description: string,
   lastCompletedDate: string,
-  lastCompletedMileage: number
+  lastCompletedMileage: number,
+    dueDate?: string | undefined
 }

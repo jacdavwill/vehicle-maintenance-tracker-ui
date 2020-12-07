@@ -13,6 +13,8 @@
         v-model="vehicle.make"
         :items="makes"
         :rules="[v => !!v || 'Make is required']"
+        auto-select-first
+        autofocus
         required
         label="Make"
         @change="onSelect(0)"
@@ -195,11 +197,13 @@ export default {
   methods: {
     reserve() {
       this.loading = true;
+
       setTimeout(() => (this.loading = false), 2000);
     },
-    submit() {
-      this.$store.dispatch('vehicle/addVehicle', this.vehicle)
-      this.$router.push('/vehicles')
+    async submit() {
+      this.$store.dispatch('vehicle/addVehicle', this.vehicle).then(_ => {
+        this.$router.push('/vehicles')
+      })
     },
     onSelect(value = null) {
       if (value === 0 && this.$refs.form.inputs[1].isDirty) {
@@ -240,13 +244,6 @@ export default {
     },
     registrationDateFormatted() {
       return this.formatDate(this.vehicle.lastRegistrationDate);
-    }
-  },
-  async beforeMount() {
-    console.log("checking authentication")
-    await this.$store.dispatch('preAuthenticate')
-    if (!this.$store.state.isLoggedIn) {
-      this.$router.push('/')
     }
   }
 };

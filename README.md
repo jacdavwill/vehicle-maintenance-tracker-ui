@@ -20,3 +20,11 @@ $ yarn generate
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 Back end can be found at https://github.com/jacdavwill/vehicle-maintenance-tracker
+
+
+Things to do:
+- Refresh button throws xml error
+- Uniform vehicle width in dashboard
+- When creating vehicle whole thing widens when selecting transmission field
+- After adding vehicle, wait for response before switching pages
+
