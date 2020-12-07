@@ -11,5 +11,5 @@ export interface Vehicle {
   color: string
   transmissionType: string
   energyType: string
-    nextMaintenance?: {} | undefined
+  nextMaintenance?: {} | undefined
 }

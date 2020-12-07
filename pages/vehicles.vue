@@ -28,10 +28,13 @@
             <div>Transmission: {{ vehicle.transmissionType }}</div>
             <div>Fuel: {{ vehicle.energyType }}</div>
           </v-card-text>
+          <v-btn @click="editVehicle({{vehicle}})">
+            Edit vehicle
+          </v-btn>
         </v-card>
       </v-row>
     </div>
-    <div v-else> 
+    <div v-else>
       <br>
       You have not added any vehicles to your account. Click the ADD VEHICLE button to get started!
     </div>
@@ -50,6 +53,9 @@ export default {
       const resp = this.$store.dispatch('vehicles/getVehicles')
       this.loading = false
       return resp
+    },
+    editVehicle(vehicle) {
+      this.$router.push('/editVehicle/${vehicle.vehicleId}')
     },
     addVehicle() {
       this.$router.push('/add-vehicle')

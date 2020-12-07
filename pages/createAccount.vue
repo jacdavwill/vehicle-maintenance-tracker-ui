@@ -97,7 +97,6 @@ export default {
       } catch (error) {
         console.log(error)
         this.showError(error)
-        // TODO: notify user that account was not created and why
       }
     },
     parsedPhone: function() {

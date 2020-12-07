@@ -15,6 +15,12 @@ export const mutations: MutationTree<VehicleState> = {
   getVehicles(state) {
     return state.vehicles
   },
+  getVehicle(state, vehicleId: string) {
+    return state.vehicles
+    return state.vehicles.filter(vehicle => {
+      vehicles.vehicleId == vehicleId
+    })[0]
+  },
   updateVehicles(state, newVehicle: Vehicle) {
     state.vehicles = state.vehicles.filter(
       vehicle => vehicle.vehicleId !== newVehicle.vehicleId
@@ -42,17 +48,17 @@ export const actions: ActionTree<VehicleState, RootState> = {
       return finalVehicles
     return []
   },
-  editVehicle({commit}, vehicle: Vehicle) {
-    axios.put(`vehicles/${vehicle.vehicleId}`, vehicle).then(vehicle => {
-      commit('editVehicle', vehicle)
+  async editVehicle({commit}, vehicle: Vehicle) {
+    axios.put(`vehicles/${vehicle.vehicleId}`, vehicle).then(response => {
+      commit('updateVehicles', vehicle)
     })
   },
-  addVehicle({commit}, vehicle: Vehicle) {
+  async addVehicle({commit}, vehicle: Vehicle) {
     axios.post(`vehicles`, vehicle).then(response => {
       commit('updateVehicles', response.data)
     })
   },
-  deleteVehicle({commit}, vehicleId: string) {
+  async deleteVehicle({commit}, vehicleId: string) {
     axios.delete(`vehicles/${vehicleId}`)
-  }
+  },
 }

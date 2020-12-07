@@ -175,7 +175,7 @@ export default {
     loading: false,
     valid: false,
     selection: 1,
-    vehicle: {},
+    vehicle: 0,
     makes: Object.keys(carTypes).sort(),
     transmissions: ["Automatic", "Manual"],
     energyTypes: ["Electric", "Gasoline", "Natural Gas"],
@@ -191,14 +191,17 @@ export default {
     tireDate: false,
     registrationDate: false
   }),
-
+  created() {
+    let vehicleId = this.$route.params.vehicleId
+    this.vehicle = this.$store.commit('getVehicle', vehicleId)
+  },
   methods: {
     reserve() {
       this.loading = true;
       setTimeout(() => (this.loading = false), 2000);
     },
     submit() {
-      this.$store.dispatch('vehicle/addVehicle', this.vehicle)
+      await this.$store.dispatch('vehicle/editVehicle', this.vehicle)
       this.$router.push('/vehicles')
     },
     onSelect(value = null) {
