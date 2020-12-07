@@ -15,10 +15,11 @@
           <v-card-title>{{ vehicle.nickname }}</v-card-title>
           <v-card-subtitle>{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</v-card-subtitle>
           <v-divider class="mx-4"></v-divider>
-          <v-card-title>Next Maintenance</v-card-title>
+          <v-card-title>Future Maintenance</v-card-title>
           <v-card-text v-if="vehicle.nextMaintenance != null">
-            <div>{{ vehicle.nextMaintenance.description }}:</div>
-            <div>{{ formatDate(vehicle.nextMaintenance.eventDate) }}</div>
+            <div v-if="vehicle.nextMaintenance.length > 0">{{ vehicle.nextMaintenance[0].description }} : {{ formatDate(vehicle.nextMaintenance[0].dueDate) }}</div>
+            <div v-if="vehicle.nextMaintenance.length > 1">{{ vehicle.nextMaintenance[1].description }} : {{ formatDate(vehicle.nextMaintenance[1].dueDate) }}</div>
+            <div v-if="vehicle.nextMaintenance.length > 2">{{ vehicle.nextMaintenance[2].description }} : {{ formatDate(vehicle.nextMaintenance[2].dueDate) }}</div>
           </v-card-text>
           <v-divider class="mx-4"></v-divider>
           <v-card-title>Details</v-card-title>
@@ -28,7 +29,12 @@
             <div>Transmission: {{ vehicle.transmissionType }}</div>
             <div>Fuel: {{ vehicle.energyType }}</div>
           </v-card-text>
-          <v-btn @click="editVehicle(vehicle)">
+          <div v-if="vehicle.notifications != null && vehicle.notifications.length > 0">
+            <v-divider class="mx-4"></v-divider>
+            <v-card-title>Notification</v-card-title>
+            <v-card-text>{{ vehicle.notifications[0].displayMessage }}</v-card-text>
+          </div>
+          <v-btn @click="editVehicle(vehicle)" >
             Edit vehicle
           </v-btn>
         </v-card>
@@ -50,6 +56,7 @@ export default {
   }),
   methods: {
     async getVehicles() {
+      console.log('get vehicles')
       const resp = this.$store.dispatch('vehicle/getVehicles')
       this.loading = false
       return resp
