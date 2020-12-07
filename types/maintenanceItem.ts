@@ -1,5 +1,5 @@
 export interface maintenanceItem {
-  maintenanceItemId: string,
+  maintItemId: string,
   vehicleId: string,
   frequencyMonths: number,
   frequencyMiles: number,

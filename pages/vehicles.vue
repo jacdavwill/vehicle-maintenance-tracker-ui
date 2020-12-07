@@ -32,11 +32,40 @@
           <div v-if="vehicle.notifications != null && vehicle.notifications.length > 0">
             <v-divider class="mx-4"></v-divider>
             <v-card-title>Notification</v-card-title>
-            <v-card-text>{{ vehicle.notifications[0].displayMessage }}</v-card-text>
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <div>{{ vehicle.notifications[0].displayMessage }}</div>
+                </v-col>
+                <v-col class="text-right">
+                  <v-btn color="warning" class="black--text">Complete</v-btn>
+                </v-col>
+              </v-row>
+              <v-row v-if="vehicle.notifications.length > 1">
+                <v-col>
+                  <div>{{ vehicle.notifications[1].displayMessage }}</div>
+                </v-col>
+                <v-col class="text-right">
+                  <v-btn color="warning" class="black--text">Complete</v-btn>
+                </v-col>
+              </v-row>
+              <v-row v-if="vehicle.notifications.length > 2">
+                <v-col>
+                  <div>{{ vehicle.notifications[2].displayMessage }}</div>
+                </v-col>
+                <v-col class="text-right">
+                  <v-btn color="warning" class="black--text">Complete</v-btn>
+                </v-col>
+              </v-row>
+            </v-card-text>
           </div>
-          <v-btn @click="editVehicle(vehicle)" >
-            Edit vehicle
-          </v-btn>
+          <v-row>
+            <v-col class="text-center">
+              <v-btn color="warning" class="black--text" @click="editVehicle(vehicle)" >
+                Edit vehicle
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-card>
       </v-row>
     </div>
@@ -73,6 +102,13 @@ export default {
     },
     formatMileage(mileage) {
       return mileage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    },
+    removeNotification(vehicleId, notificationId) {
+      for (let vehicle in this.vehicles) {
+        if (vehicle.vehicleId.toString() === vehicleId.toString()) {
+
+        }
+      }
     }
   },
   async mounted() {

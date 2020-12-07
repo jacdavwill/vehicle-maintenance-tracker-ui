@@ -135,8 +135,9 @@ export default {
       setTimeout(() => (this.loading = false), 2000);
     },
     async submit() {
-      await this.$store.dispatch('vehicle/editVehicle', this.vehicle)
-      this.$router.push('/vehicles')
+      this.$store.dispatch('vehicle/editVehicle', this.vehicle).then(_ => {
+        this.$router.push('/vehicles')
+      })
     },
     async deleteVehicle() {
       await this.$store.dispatch('vehicle/deleteVehicle', this.vehicle.vehicleId)

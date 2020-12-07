@@ -44,7 +44,8 @@ export const actions: ActionTree<VehicleState, RootState> = {
                   let date = new Date(item.lastCompletedDate)
                   item.dueDate = date.setMonth(date.getMonth() + item.frequencyMonths)
                   for (let not of notifications) {
-                      if (not.maintItemId == item.maintenanceItemId) {
+                      console.log(item)
+                      if (not.maintItemId.toString() == item.maintItemId.toString()) {
                           vehicle.notifications.push(not)
                           console.log('added notification')
                       }
@@ -52,6 +53,7 @@ export const actions: ActionTree<VehicleState, RootState> = {
               }
               vehicle.nextMaintenance = main
           }
+          console.log(finalVehicles)
           finalVehicles.push(vehicle)
       }
       commit('setVehicles', finalVehicles)
