@@ -175,13 +175,6 @@ export default {
     registrationDateFormatted() {
       return this.formatDate(this.vehicle.lastRegistrationDate);
     }
-  },
-  // async beforeMount() {
-  //   console.log("checking authentication")
-  //   await this.$store.dispatch('preAuthenticate')
-  //   if (!this.$store.state.isLoggedIn) {
-  //     this.$router.push('/')
-  //   }
-  // }
+  }
 };
 </script>

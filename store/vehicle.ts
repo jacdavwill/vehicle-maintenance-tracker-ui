@@ -23,9 +23,9 @@ export const mutations: MutationTree<VehicleState> = {
       return ans[0]
   },
   updateVehicles(state, newVehicle: Vehicle) {
-    state.vehicles = state.vehicles.filter(
-      vehicle => vehicle.vehicleId !== newVehicle.vehicleId
-    )
+    state.vehicles = state.vehicles.filter(vehicle => {
+        return vehicle.vehicleId !== newVehicle.vehicleId
+    })
     state.vehicles.push(newVehicle)
   },
   setVehicleToEdit(state, vehicleId) {
